@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "221883540223",
+    "firebase_url": "https://roro-medicine-reminder-default-rtdb.firebaseio.com",
+    "project_id": "roro-medicine-reminder",
+    "storage_bucket": "roro-medicine-reminder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221883540223:android:a01712f2c701a8a4ed62ca",
+        "android_client_info": {
+          "package_name": "com.example.roro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221883540223-3rspiegnqasree143eaih55ihf6loecv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.roro",
+            "certificate_hash": "72a485aa2ca72b223f881bc80a38ce7a7dd0ed80"
+          }
+        },
+        {
+          "client_id": "221883540223-cfi0rdm7okef4sof84iq9aeo8hl00opf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwdc0USBlmB8FUpVinSoWSaMM556QmTBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221883540223-cfi0rdm7okef4sof84iq9aeo8hl00opf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
