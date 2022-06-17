@@ -1,6 +1,6 @@
 # roro_medicine_reminder
 
-A new Flutter project.
+It is a Final Year Project which I have done for my Bachelor’s Degree. The purpose of the mobile app is to help patients to help keep track or manage health-related routines like appointments & reminders to take in medicines. It uses Google Flutter framework with Google Firebase backend service & Dart object-oriented language.
 
 ## Getting Started
 
