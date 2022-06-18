@@ -45,8 +45,8 @@ class NotificationService with ChangeNotifier {
         importance: Importance.max,
         priority: Priority.high,
         ticker:'Medicine reminder'
-        //playSound: true,
-        //sound:RawResourceAndroidNotificationSound('notification_sound'),
+        playSound: true,
+        sound:RawResourceAndroidNotificationSound('notification_sound'),
 
     );
     //var iOSPlatformChannelSpecifics = IOSNotificationDetails();
