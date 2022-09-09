@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:roro_medicine_reminder/screens/authenticate/PhoneAuth.dart';
+import 'package:roro_medicine_reminder/screens/authenticate/new_auth.dart';
 import 'package:roro_medicine_reminder/screens/authenticate/signin.dart';
 import '../../services/auth.dart';
 import '../main/home/homePage.dart';
-
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -35,7 +34,8 @@ class _SignUpPageState extends State<SignUpPage> {
             children: [
               Text(
                 "SIGN UP",
-                style: TextStyle(fontFamily: "Mulish",
+                style: TextStyle(
+                  fontFamily: "Mulish",
                   fontSize: 35,
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,
@@ -45,21 +45,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
               buttonItem("assets/images/google.svg", "Continue with Google", 25,
-                      () async {
-                    await authClass.googleSignIn(context);
-                  }),
+                  () async {
+                await authClass.googleSignIn(context);
+              }),
               SizedBox(
                 height: 15,
               ),
-              buttonItem("assets/images/phone.svg", "Continue with Mobile", 30, () {
-
-              }),
+              buttonItem(
+                  "assets/images/phone.svg", "Continue with Mobile", 30, () {}),
               SizedBox(
                 height: 18,
               ),
               Text(
                 "OR",
-                style: TextStyle(fontFamily: "Mulish", color: Colors.blueGrey, fontSize: 18),
+                style: TextStyle(
+                    fontFamily: "Mulish", color: Colors.blueGrey, fontSize: 18),
               ),
               SizedBox(
                 height: 18,
@@ -81,7 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Text(
                     "If you already have an Account? ",
-                    style: TextStyle(fontFamily: "Mulish",
+                    style: TextStyle(
+                      fontFamily: "Mulish",
                       color: Colors.blueGrey,
                       fontSize: 18,
                     ),
@@ -91,11 +92,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (builder) => SignInPage()),
-                              (route) => false);
+                          (route) => false);
                     },
                     child: Text(
                       "Login",
-                      style: TextStyle(fontFamily: "Mulish",
+                      style: TextStyle(
+                        fontFamily: "Mulish",
                         color: Colors.blueGrey,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -118,19 +120,26 @@ class _SignUpPageState extends State<SignUpPage> {
           circular = true;
         });
         try {
-          firebase_auth.UserCredential userCredential =
-          await firebaseAuth.createUserWithEmailAndPassword(
-              email: _emailController.text, password: _pwdController.text);
-          print(userCredential.user.email);
+          var auth = FirebaseAuthMethods(firebaseAuth);
+          await auth.signUpWithEmail(
+              email: _emailController.text,
+              password: _pwdController.text,
+              context: context);
+          // print(userCredential.user.email);
           setState(() {
             circular = false;
           });
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (builder) => HomePage()),
-                  (route) => false);
+              (route) => false);
         } catch (e) {
-          final snackbar = SnackBar(content: Text(e.toString()));
+          final snackbar = SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              e.toString(),
+            ),
+          );
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
           setState(() {
             circular = false;
@@ -142,19 +151,19 @@ class _SignUpPageState extends State<SignUpPage> {
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color:
-            Color(0xffff9987),
+          color: Color(0xffff9987),
         ),
         child: Center(
           child: circular
               ? CircularProgressIndicator()
               : Text(
-            "SIGN UP",
-            style: TextStyle(fontFamily: "Mulish",
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
+                  "SIGN UP",
+                  style: TextStyle(
+                    fontFamily: "Mulish",
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
         ),
       ),
     );

@@ -1,18 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:roro_medicine_reminder/screens/authenticate/forgotPwd.dart';
+import 'package:roro_medicine_reminder/screens/authenticate/new_auth.dart';
 import 'package:roro_medicine_reminder/screens/authenticate/register.dart';
 import 'package:roro_medicine_reminder/services/auth.dart';
 
 import '../main/home/homePage.dart';
 import 'PhoneAuth.dart';
-
-
-
-
-
 
 class SignInPage extends StatefulWidget {
   static const routeName = '/SignInPage';
@@ -43,7 +38,8 @@ class _SignInPageState extends State<SignInPage> {
             children: [
               Text(
                 "SIGN IN",
-                style: TextStyle(fontFamily: "Mulish",
+                style: TextStyle(
+                  fontFamily: "Mulish",
                   fontSize: 35,
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,
@@ -52,13 +48,15 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(
                 height: 20,
               ),
-              buttonItem("assets/images/google.svg", "Continue with Google", 25, () {
+              buttonItem("assets/images/google.svg", "Continue with Google", 25,
+                  () {
                 authClass.googleSignIn(context);
               }),
               SizedBox(
                 height: 15,
               ),
-              buttonItem("assets/images/phone.svg", "Continue with Mobile", 30, () {
+              buttonItem("assets/images/phone.svg", "Continue with Mobile", 30,
+                  () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (builder) => PhoneAuthPage()));
               }),
@@ -67,7 +65,8 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Text(
                 "OR",
-                style: TextStyle(fontFamily: "Mulish", color: Colors.blueGrey, fontSize: 18),
+                style: TextStyle(
+                    fontFamily: "Mulish", color: Colors.blueGrey, fontSize: 18),
               ),
               SizedBox(
                 height: 18,
@@ -89,7 +88,8 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   Text(
                     "Don't have account? ",
-                    style: TextStyle(fontFamily: "Mulish",
+                    style: TextStyle(
+                      fontFamily: "Mulish",
                       color: Colors.blueGrey,
                       fontSize: 18,
                     ),
@@ -99,11 +99,12 @@ class _SignInPageState extends State<SignInPage> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (builder) => SignUpPage()),
-                              (route) => false);
+                          (route) => false);
                     },
                     child: Text(
                       "SignUp",
-                      style: TextStyle(fontFamily: "Mulish",
+                      style: TextStyle(
+                        fontFamily: "Mulish",
                         color: Colors.blueGrey,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -115,22 +116,23 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(
                 height: 10,
               ),
-          InkWell (
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (builder) => forgotPwd()),
+              InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (builder) => forgotPwd()),
                       (route) => false);
-            },
-              child: Text(
-                "Forgot Password?",
-                style: TextStyle(fontFamily: "Mulish",
-                  color: Colors.blueGrey,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                },
+                child: Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    fontFamily: "Mulish",
+                    color: Colors.blueGrey,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-          )
+              )
             ],
           ),
         ),
@@ -141,14 +143,28 @@ class _SignInPageState extends State<SignInPage> {
   Widget colorButton() {
     return InkWell(
       onTap: () async {
+        // try {
+        //   firebase_auth.UserCredential userCredential =
+        //   await firebaseAuth.signInWithEmailAndPassword(
+        //       email: _emailController.text, password: _pwdController.text);
+        //   print(userCredential.user.email);
+        //   setState(() {
+        //     circular = false;
+        //   });
+        //   Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(builder: (builder) => HomePage()),
+        //           (route) => false);
+        // } catch (e) {
+        //   final snackbar = SnackBar(content: Text(e.toString()));
+        //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        //   setState(() {
+        //     circular = false;
+        //   });
+        // }
         try {
-          firebase_auth.UserCredential userCredential =
-          await firebaseAuth.signInWithEmailAndPassword(
-              email: _emailController.text, password: _pwdController.text);
-          print(userCredential.user.email);
-          setState(() {
-            circular = false;
-          });
+          var auth = FirebaseAuthMethods(firebaseAuth);
+         await auth.signUpWithEmail(email: _emailController.text,password: _pwdController.text,context: context);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (builder) => HomePage()),
@@ -166,19 +182,19 @@ class _SignInPageState extends State<SignInPage> {
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color:
-          Color(0xffff9987),
+          color: Color(0xffff9987),
         ),
         child: Center(
           child: circular
               ? CircularProgressIndicator()
               : Text(
-            "SIGN IN",
-            style: TextStyle(fontFamily: "Mulish",
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
+                  "SIGN IN",
+                  style: TextStyle(
+                    fontFamily: "Mulish",
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
         ),
       ),
     );
