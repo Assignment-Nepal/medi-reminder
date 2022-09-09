@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAur5sT_DlIv6pOH767ARFmKtER4OCuF9c',
-    appId: '1:376150346562:android:5dca55b9b6def4c242d6db',
+    appId: '1:376150346562:android:80ff194e3d943ace42d6db',
     messagingSenderId: '376150346562',
     projectId: 'medicin-reminder-7727e',
     storageBucket: 'medicin-reminder-7727e.appspot.com',
