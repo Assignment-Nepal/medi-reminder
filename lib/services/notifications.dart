@@ -44,7 +44,7 @@ class NotificationService with ChangeNotifier {
         'your channel id', 'your channel name',
         importance: Importance.max,
         priority: Priority.high,
-        ticker:'Medicine reminder'
+        ticker:'Medicine reminder',
         playSound: true,
         sound:RawResourceAndroidNotificationSound('notification_sound'),
 

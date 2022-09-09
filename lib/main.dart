@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
+import 'package:roro_medicine_reminder/firebase_options.dart';
 import 'package:roro_medicine_reminder/resources/service_locator.dart';
-
-
 import 'package:roro_medicine_reminder/screens/authenticate/signin.dart';
 import 'package:roro_medicine_reminder/screens/document/add_documents_screen.dart';
 import 'package:roro_medicine_reminder/screens/document/view_documents_screen.dart';
@@ -40,6 +39,9 @@ Future<void> main() async {
   FlutterDownloader.initialize(debug: false);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+// );
   runApp(MyApp());
 }
 
@@ -80,7 +82,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blueGrey,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: auth.isAuth
+          home: 
+          auth.isAuth
               ? HomePage()
               : FutureBuilder(
               future: auth.tryAutoLogIn(),
