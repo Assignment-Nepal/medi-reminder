@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
@@ -20,6 +21,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _pwdController = TextEditingController();
   bool circular = false;
   AuthClass authClass = AuthClass();
+  CollectionReference users = FirebaseFirestore.instance.collection('User');
 
   @override
   Widget build(BuildContext context) {
@@ -120,12 +122,17 @@ class _SignUpPageState extends State<SignUpPage> {
           circular = true;
         });
         try {
-          var auth = FirebaseAuthMethods(firebaseAuth);
-          await auth.signUpWithEmail(
-              email: _emailController.text,
-              password: _pwdController.text,
-              context: context);
-          // print(userCredential.user.email);
+          AuthClass().signUp(_emailController.text, _pwdController.text);
+          // var auth = FirebaseAuthMethods(firebaseAuth);
+          // await auth.signUpWithEmail(
+          //     email: _emailController.text,
+          //     password: _pwdController.text,
+          //     context: context);
+          //print(userCredential.user.email);
+          // await users
+          //     .add({"email": _emailController.text})
+          //     .then((value) => print("User Added"))
+          //     .catchError((error) => print("Failed to add user: $error"));
           setState(() {
             circular = false;
           });

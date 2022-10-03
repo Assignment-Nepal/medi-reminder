@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/helpers/show_time_picker.dart';
@@ -15,12 +14,10 @@ import 'package:roro_medicine_reminder/widgets/app_default.dart';
 
 import '../../../components/navBar.dart';
 import '../../../models/reminder.dart';
-import '../../../services/auth.dart';
 import '../../../services/database_helper.dart';
 
 import '../../../services/notifications.dart';
 import 'medicine_reminder.dart';
-
 
 class ReminderDetail extends StatefulWidget {
   static const String routeName = 'Medicine_detail_screen';
@@ -135,7 +132,7 @@ class _ReminderDetailState extends State<ReminderDetail> {
     });
 
     GoogleVisionImage googleVisionImage =
-    GoogleVisionImage.fromFile(pickedImage);
+        GoogleVisionImage.fromFile(pickedImage);
     TextRecognizer recognizeText = GoogleVision.instance.textRecognizer();
     VisionText readText = await recognizeText.processImage(googleVisionImage);
 
@@ -163,7 +160,7 @@ class _ReminderDetailState extends State<ReminderDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ROROAppBar(),
-      drawer:AppDrawer(),
+      drawer: AppDrawer(),
       body: WillPopScope(
         onWillPop: () async {
           if (reminder !=
@@ -212,7 +209,10 @@ class _ReminderDetailState extends State<ReminderDetail> {
                 child: Text(
                   'Add Details',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontFamily: 'Mulish', fontSize: 30, fontWeight: FontWeight.w100),
+                  style: TextStyle(
+                      fontFamily: 'Mulish',
+                      fontSize: 30,
+                      fontWeight: FontWeight.w100),
                 ),
               ),
               SizedBox(
@@ -241,7 +241,9 @@ class _ReminderDetailState extends State<ReminderDetail> {
                       child: GestureDetector(
                         child: Icon(
                           Icons.camera,
-                          color: isImageLoaded ? Colors.blue[100] : Colors.blueGrey,
+                          color: isImageLoaded
+                              ? Colors.blue[100]
+                              : Colors.blueGrey,
                           size: 43,
                         ),
                         onTap: () async {
@@ -432,15 +434,16 @@ class _ReminderDetailState extends State<ReminderDetail> {
                 height: 8,
               ),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(elevation: 2,
+                style: ElevatedButton.styleFrom(
+                  elevation: 2,
                   primary: Color(0xffff9987),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide(
                         color: Colors.redAccent[100],
                       )),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 40, vertical: 10),),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                ),
                 label: Text('Save'),
                 icon: Icon(Icons.save),
                 onPressed: () async {
@@ -485,11 +488,17 @@ class _ReminderDetailState extends State<ReminderDetail> {
       if (tempReminder != reminder) {
         notificationService.removeReminder(reminder.id);
         if (selectedTime1 != t1) {
-          notificationService.dailyMedicineNotification(
-              id: reminder.notificationID,
-              title: 'Medicine Reminder',
-              body: 'Please take your ' + reminder.name + ' on time! ',
-              time: Time(selectedTime1.hour, selectedTime1.minute, 0));
+          log(selectedTime1.hour);
+          notificationService.registerMessage(
+            hour: selectedTime1.hour,minutes: selectedTime1.minute,title: "hello",body: ""
+          );
+          // notificationService.schedNotification(
+          //     1, "title", "body", selectedTime1.hour, selectedTime1.minute);
+          // notificationService.dailyMedicineNotification(
+          //     id: reminder.notificationID,
+          //     title: 'Medicine Reminder',
+          //     body: 'Please take your ' + reminder.name + ' on time! ',
+          //     time: Time(selectedTime1.hour, selectedTime1.minute, 0));
         }
         if (times >= 2) {
           if (selectedTime2 != t2) {
@@ -515,11 +524,17 @@ class _ReminderDetailState extends State<ReminderDetail> {
       reminder.notificationID = rng.nextInt(9999);
       result = await helper.insertReminder(reminder);
       if (selectedTime1 != t1) {
-        notificationService.dailyMedicineNotification(
-            id: reminder.notificationID,
-            title: 'Medicine Reminder',
-            body: 'Please take your ' + reminder.name + ' on time! ',
-            time: Time(selectedTime1.hour, selectedTime1.minute, 0));
+              notificationService.registerMessage(
+                id: 988,
+            hour: selectedTime1.hour,minutes: selectedTime1.minute,title: "Medicine Reminder",body: "Please take your ' + reminder.name + ' on time! ",
+          );
+        // notificationService.schedNotification(
+        //     1, "title", "body", selectedTime1.hour, selectedTime1.minute);
+        // notificationService.dailyMedicineNotification(
+        //     id: reminder.notificationID,
+        //     title: 'Medicine Reminder',
+        //     body: 'Please take your ' + reminder.name + ' on time! ',
+        //     time: Time(selectedTime1.hour, selectedTime1.minute, 0));
       }
       if (times >= 2) {
         if (selectedTime2 != t2) {
@@ -539,11 +554,10 @@ class _ReminderDetailState extends State<ReminderDetail> {
               time: Time(selectedTime3.hour, selectedTime3.minute, 0));
         }
       }
-
     }
     if (result != 0) {
-       //Success
-     _showAlertDialog('Status', 'Reminder Saved Successfully');
+      //Success
+      _showAlertDialog('Status', 'Reminder Saved Successfully');
       await Navigator.push(context, MaterialPageRoute(builder: (context) {
         return MedicineReminder();
       }));

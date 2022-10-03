@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAur5sT_DlIv6pOH767ARFmKtER4OCuF9c',
-    appId: '1:376150346562:android:80ff194e3d943ace42d6db',
-    messagingSenderId: '376150346562',
-    projectId: 'medicin-reminder-7727e',
-    storageBucket: 'medicin-reminder-7727e.appspot.com',
+    apiKey: 'AIzaSyD-VdoBu-0fo8Elh5PLYJT6PLZCdUEGClM',
+    appId: '1:597068457069:android:fc9e9c27f634189b82cb64',
+    messagingSenderId: '597068457069',
+    projectId: 'doctor-patient-admin',
+    storageBucket: 'doctor-patient-admin.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDIb_Y41Z_xdwNzesi2dMajjI2xoLsS8XM',
-    appId: '1:376150346562:ios:50420f16eb3c3a5b42d6db',
-    messagingSenderId: '376150346562',
-    projectId: 'medicin-reminder-7727e',
-    storageBucket: 'medicin-reminder-7727e.appspot.com',
-    iosClientId: '376150346562-86che9r2m41obsrb52alk4odbolj5quh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCziBaN44VaMWH80LWHDLYNFpOTBQWqDsY',
+    appId: '1:597068457069:ios:30c406f812a007bf82cb64',
+    messagingSenderId: '597068457069',
+    projectId: 'doctor-patient-admin',
+    storageBucket: 'doctor-patient-admin.appspot.com',
+    iosClientId: '597068457069-s4opou9h25ksva5s0dfjj4gnhliu71ao.apps.googleusercontent.com',
     iosBundleId: 'com.example.roroMedicineReminder',
   );
 }

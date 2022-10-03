@@ -33,8 +33,8 @@ class _MedicineDecisionScreenState extends State<MedicineDecisionScreen> {
         headers: {
       'Authorization': 'Basic $base64Str'
     }, body: {
-      'From': '+12567403927',
-      'To': '+918078214942',
+      'From': '',
+      'To': '+',
       'Body': 'Just forgot to take medicine now'
     });
 
@@ -114,7 +114,7 @@ class _MedicineDecisionScreenState extends State<MedicineDecisionScreen> {
                       print(r.intakeHistory);
                       databaseHelper.updateReminder(r);
                       setState(() {});
-                      await sendSms();
+                     // await sendSms();
                       Navigator.pop(context);
                     },
                   ),

@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   return Container(
                     // color: colors[i],
                     child: Padding(
-                      padding: const EdgeInsets.all(35.0),
+                      padding: const EdgeInsets.all(25.0),
                       child: Column(
                         children: [
                           Image.asset(

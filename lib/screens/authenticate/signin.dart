@@ -163,12 +163,11 @@ class _SignInPageState extends State<SignInPage> {
         //   });
         // }
         try {
-          var auth = FirebaseAuthMethods(firebaseAuth);
-         await auth.signUpWithEmail(email: _emailController.text,password: _pwdController.text,context: context);
+          AuthClass().signIn(_emailController.text, _pwdController.text);
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (builder) => HomePage()),
-                  (route) => false);
+              (route) => false);
         } catch (e) {
           final snackbar = SnackBar(content: Text(e.toString()));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);

@@ -32,8 +32,6 @@ import 'package:roro_medicine_reminder/services/notifications.dart';
 import 'models/appoinment.dart';
 import 'models/reminder.dart';
 
-
-
 Future<void> main() async {
   setupLocator();
   FlutterDownloader.initialize(debug: false);
@@ -65,8 +63,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AuthClass(),
         ),
-
-
         ChangeNotifierProvider(
           create: (context) => NotificationService(),
         ),
@@ -82,21 +78,19 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blueGrey,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: 
+          home:
+          // HomePage(),
           auth.isAuth
               ? HomePage()
               : FutureBuilder(
-              future: auth.tryAutoLogIn(),
-              builder: (context, authResult) =>
-              authResult.connectionState == ConnectionState.waiting
-                  ? OnboardingScreen()
-                  : OnboardingScreen()),
+                  future: auth.tryAutoLogIn(),
+                  builder: (context, authResult) =>
+                      authResult.connectionState == ConnectionState.waiting
+                          ? OnboardingScreen()
+                          : OnboardingScreen()),
           routes: {
-
-
             Progress.routeName: (ctx) => Progress(),
             Inventory.routeName: (ctx) => Inventory(),
-
             SignInPage.routeName: (ctx) => SignInPage(),
             ProfileScreen.routeName: (ctx) => ProfileScreen(),
             ProfileEdit.routeName: (ctx) => ProfileEdit(),
@@ -104,9 +98,9 @@ class MyApp extends StatelessWidget {
             ViewDocuments.routeName: (context) => ViewDocuments(),
             AppoinmentReminder.routeName: (ctx) => AppoinmentReminder(),
             AppoinmentDetail.routeName: (ctx) => AppoinmentDetail(
-              Appoinment('', '', '', '', 999999, false),
-              '',
-            ),
+                  Appoinment('', '', '', '', 999999, false),
+                  '',
+                ),
             AppoinmentDecision.routeName: (context) =>
                 AppoinmentDecision(Appoinment('', '', '', '', 999999, false)),
             MedicineReminder.routeName: (ctx) => MedicineReminder(),
@@ -116,12 +110,9 @@ class MyApp extends StatelessWidget {
             NearbyHospitalScreen.routeName: (ctx) => NearbyHospitalScreen(),
             InitialSetupScreen.routeName: (ctx) => InitialSetupScreen(),
             EditRelativesScreen.routeName: (ctx) => EditRelativesScreen(''),
-
           },
         ),
       ),
-
     );
-
   }
 }

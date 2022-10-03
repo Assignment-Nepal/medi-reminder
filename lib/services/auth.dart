@@ -1,6 +1,6 @@
-
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,13 +8,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:roro_medicine_reminder/screens/authenticate/firebase_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/custom_exceptions.dart';
 import '../screens/main/home/homePage.dart';
-
-
-
 
 class AuthClass extends ChangeNotifier {
   String _token;
@@ -39,13 +37,14 @@ class AuthClass extends ChangeNotifier {
   }
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-
+  CollectionReference users = FirebaseFirestore.instance.collection("User");
   final storage = new FlutterSecureStorage();
 
   Stream<String> get onAuthStateChanged =>
@@ -60,15 +59,14 @@ class AuthClass extends ChangeNotifier {
     try {
       GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
+          await googleSignInAccount.authentication;
       AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
-
       final QuerySnapshot result =
-      await FirebaseFirestore.instance.collection('profile').get();
+          await FirebaseFirestore.instance.collection('profile').get();
       final List<DocumentSnapshot> documents = result.docs;
       bool userExits = false;
       for (var document in documents) {
@@ -88,8 +86,8 @@ class AuthClass extends ChangeNotifier {
             'email': _auth.currentUser.email,
             'phoneNumber': _auth.currentUser.phoneNumber ?? 'Not Set',
             'uid': _auth.currentUser.uid,
-            'picture':
-            _auth.currentUser.photoURL ?? 'https://www.nicepng.com/ourpic/u2q8i1t4t4t4q8a9_group-of-10-guys-login-user-icon-png/',
+            'picture': _auth.currentUser.photoURL ??
+                'https://www.nicepng.com/ourpic/u2q8i1t4t4t4q8a9_group-of-10-guys-login-user-icon-png/',
             'weight': 'Not Set',
             'height': 'Not Set',
             'bloodPressure': 'Not Set',
@@ -105,15 +103,15 @@ class AuthClass extends ChangeNotifier {
       }
       if (googleSignInAccount != null) {
         UserCredential userCredential =
-        await _auth.signInWithCredential(credential);
+            await _auth.signInWithCredential(credential);
         storeTokenAndData(userCredential);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (builder) => HomePage()),
-                (route) => false);
+            (route) => false);
 
         final snackBar =
-        SnackBar(content: Text(userCredential.user.displayName));
+            SnackBar(content: Text(userCredential.user.displayName));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     } catch (e) {
@@ -139,8 +137,8 @@ class AuthClass extends ChangeNotifier {
     final url =
         'https://identitytoolkit.googleapis.com/v1/$urlSeg?key=AIzaSyCw-YBHGinNHqpbZW74TpL511-s_p5KJQI';
     try {
-      final response = await http.post(Uri.parse(
-          url),
+      final response = await http.post(
+        Uri.parse(url),
         body: json.encode(
           {
             'email': email,
@@ -150,7 +148,7 @@ class AuthClass extends ChangeNotifier {
         ),
       );
       final QuerySnapshot result =
-      await FirebaseFirestore.instance.collection('profile').get();
+          await FirebaseFirestore.instance.collection('profile').get();
       final List<DocumentSnapshot> documents = result.docs;
       bool userExits = false;
       for (var document in documents) {
@@ -170,8 +168,8 @@ class AuthClass extends ChangeNotifier {
             'email': _auth.currentUser.email,
             'phoneNumber': _auth.currentUser.phoneNumber ?? 'Not Set ',
             'uid': _auth.currentUser.uid,
-            'picture':
-            _auth.currentUser.photoURL ?? 'https://www.nicepng.com/ourpic/u2q8i1t4t4t4q8a9_group-of-10-guys-login-user-icon-png/',
+            'picture': _auth.currentUser.photoURL ??
+                'https://www.nicepng.com/ourpic/u2q8i1t4t4t4q8a9_group-of-10-guys-login-user-icon-png/',
             'weight': 'Not Set',
             'height': 'Not Set',
             'bloodPressure': 'Not Set',
@@ -199,7 +197,7 @@ class AuthClass extends ChangeNotifier {
         ),
       );
       _autoLogout();
-      notifyListeners();
+      // notifyListeners();
 
       final userData = json.encode(
         {
@@ -215,11 +213,47 @@ class AuthClass extends ChangeNotifier {
   }
 
   Future<void> signUp(String email, String password) async {
-    return _authenticate(email, password, 'accounts:signUp');
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      log(userCredential.user.email);
+      //storeTokenAndData(userCredential);
+// users.add({
+// "email":email,
+// }) .then((value) => log("User Added")).catchError((error) => log("Failed to add user: $error"));
+//       /*
+//       check if patient then  databse with patient else with doctor it will be chat.
+
+//       */
+//      await _firestore.collection('User').doc(userCredential.user.uid).set({
+//        "email": email,
+
+//       });
+
+      Api api = Api(path: "User");
+      api.addDocument({"user": "shiwam"});
+    } on FirebaseException catch (e) {
+      log("Firebase Exception " + e.message);
+    }
   }
 
   Future<void> signIn(String email, String password) async {
-    return _authenticate(email, password, 'accounts:signInWithPassword');
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      log(userCredential.user.email);
+      //  storeTokenAndData(userCredential);
+
+      /*
+      check if patient then  databse with patient else with doctor it will be chat.
+      
+      */
+      // await _firestore.collection('User').doc(userCredential.user.uid).set({
+      //   "email": email,
+      // }).whenComplete(() {
+      //   log("Svae in data base");
+      // });
+    } on FirebaseException catch (e) {}
   }
 
   Future<bool> tryAutoLogIn() async {
@@ -228,7 +262,7 @@ class AuthClass extends ChangeNotifier {
       return false;
     }
     final extractedData =
-    json.decode(prefs.getString('userData')) as Map<String, Object>;
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
     final userExpiryDate = DateTime.parse(extractedData['expiryDate']);
     if (userExpiryDate.isBefore(DateTime.now())) {
       return false;
@@ -260,8 +294,6 @@ class AuthClass extends ChangeNotifier {
     }
     final expiryTime = _expiryDate.difference(DateTime.now()).inSeconds;
     authTimer = Timer(Duration(seconds: expiryTime), logout);
-
-
   }
 
   void storeTokenAndData(UserCredential userCredential) async {
@@ -270,6 +302,7 @@ class AuthClass extends ChangeNotifier {
         key: "token", value: userCredential.credential.token.toString());
     await storage.write(
         key: "usercredential", value: userCredential.toString());
+    log("Store token" + userCredential.credential.token.toString());
   }
 
   Future<String> getToken() async {
@@ -316,12 +349,12 @@ class AuthClass extends ChangeNotifier {
           verificationId: verificationId, smsCode: smsCode);
 
       UserCredential userCredential =
-      await _auth.signInWithCredential(credential);
+          await _auth.signInWithCredential(credential);
       storeTokenAndData(userCredential);
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (builder) => HomePage()),
-              (route) => false);
+          (route) => false);
 
       showSnackBar(context, "Logged In");
     } catch (e) {

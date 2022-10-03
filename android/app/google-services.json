@@ -1,76 +1,40 @@
 {
   "project_info": {
-    "project_number": "376150346562",
-    "project_id": "medicin-reminder-7727e",
-    "storage_bucket": "medicin-reminder-7727e.appspot.com"
+    "project_number": "597068457069",
+    "project_id": "doctor-patient-admin",
+    "storage_bucket": "doctor-patient-admin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:376150346562:android:80ff194e3d943ace42d6db",
+        "mobilesdk_app_id": "1:597068457069:android:fc9e9c27f634189b82cb64",
         "android_client_info": {
           "package_name": "com.company.medi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "376150346562-lgguebkqtdfiv71ij96udottk4llqvng.apps.googleusercontent.com",
+          "client_id": "597068457069-pu1gri36r05dg4gqr3k045kmsn5k1l3l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAur5sT_DlIv6pOH767ARFmKtER4OCuF9c"
+          "current_key": "AIzaSyD-VdoBu-0fo8Elh5PLYJT6PLZCdUEGClM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "376150346562-lgguebkqtdfiv71ij96udottk4llqvng.apps.googleusercontent.com",
+              "client_id": "597068457069-pu1gri36r05dg4gqr3k045kmsn5k1l3l.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "376150346562-86che9r2m41obsrb52alk4odbolj5quh.apps.googleusercontent.com",
+              "client_id": "597068457069-0vbovg80jg949f9tgp9ujr1c1svha9fg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.roroMedicineReminder"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:376150346562:android:5dca55b9b6def4c242d6db",
-        "android_client_info": {
-          "package_name": "com.example.roro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "376150346562-lgguebkqtdfiv71ij96udottk4llqvng.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAur5sT_DlIv6pOH767ARFmKtER4OCuF9c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "376150346562-lgguebkqtdfiv71ij96udottk4llqvng.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "376150346562-86che9r2m41obsrb52alk4odbolj5quh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.roroMedicineReminder"
+                "bundle_id": "com.example.qr2"
               }
             }
           ]

@@ -1,8 +1,10 @@
+import 'package:fab_action_menu/fab_action_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rich_alert/rich_alert.dart';
+import 'package:roro_medicine_reminder/screens/add-screen/add_screen.dart';
 import 'package:roro_medicine_reminder/screens/reminder/medicine/medicine_reminder.dart';
 
 import 'package:roro_medicine_reminder/widgets/app_default.dart';
@@ -41,7 +43,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -121,10 +122,12 @@ class _HomePageState extends State<HomePage> {
                               icon: FontAwesomeIcons.capsules,
                               size: width * 0.2,
                               color: Colors.yellowAccent[700],
-                              borderColor: Colors.yellowAccent.withOpacity(0.75),
+                              borderColor:
+                                  Colors.yellowAccent.withOpacity(0.75),
                             ),
                             onTap: () {
-                              Navigator.pushNamed(context, MedicineReminder.routeName);
+                              Navigator.pushNamed(
+                                  context, MedicineReminder.routeName);
                             },
                           ),
                           Padding(
@@ -200,7 +203,7 @@ class _HomePageState extends State<HomePage> {
 //                  children: <Widget>[
 //                    Expanded(
 //                      child: Column(
- //                       children: <Widget>[
+                //                       children: <Widget>[
 //                          InkWell(
 //                            splashColor: Colors.redAccent,
 //                            child: CardButton(
@@ -242,7 +245,7 @@ class _HomePageState extends State<HomePage> {
 //                            padding: EdgeInsets.only(top: 8.0),
 //                            child: Text('Check your Heart rate'),
 //                          ),
-                          /*InkWell(
+                /*InkWell(
                             splashColor: Colors.redAccent,
                             child: CardButton(
                               height: height * 0.2,
@@ -342,8 +345,8 @@ class _HomePageState extends State<HomePage> {
                             onTap: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (_) {
-                                    return TrackerHome();
-                                  }));
+                                return TrackerHome();
+                              }));
                             },
                           ),
                           Padding(
@@ -360,7 +363,31 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(
                   height: 30,
-                )
+                ),
+                // Expanded(
+                //   child: Column(
+                //     children: <Widget>[
+                //       InkWell(
+                //         splashColor: Colors.purple,
+                //         child: CardButton(
+                //           height: height * 0.2,
+                //           width: width * (35 / 100),
+                //           icon: FontAwesomeIcons.userDoctor,
+                //           size: width * (25 / 100),
+                //           color: Colors.purple[200],
+                //           borderColor: Colors.purple.withOpacity(0.75),
+                //         ),
+                //         onTap: () {
+                //           Navigator.push(context, MaterialPageRoute(builder: (context)=>AddToReminder()));
+                //         },
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsets.only(top: 8.0),
+                //         child: Text('Appointment Reminder'),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           )),

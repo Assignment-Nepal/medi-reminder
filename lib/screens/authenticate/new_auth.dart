@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +24,17 @@ class FirebaseAuthMethods {
 
   // EMAIL SIGN UP
   Future<void> signUpWithEmail({
-     String email,
+    String email,
     String password,
-     BuildContext context,
+    BuildContext context,
   }) async {
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await sendEmailVerification(context);
+      showSnackBar(context, "SignIn susccess", color: Colors.green);
+      // await sendEmailVerification(context);
     } on FirebaseAuthException catch (e) {
       // if you want to display your own custom error message
       if (e.code == 'weak-password') {
@@ -42,29 +42,31 @@ class FirebaseAuthMethods {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-       showSnackBar(
-          context, e.message); // Displaying the usual firebase error message
+      showSnackBar(context, e.message,
+          color: Colors.red); // Displaying the usual firebase error message
     }
   }
 
   // EMAIL LOGIN
   Future<void> loginWithEmail({
-     String email,
-     String password,
-     BuildContext context,
+    String email,
+    String password,
+    BuildContext context,
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (!user.emailVerified) {
-        await sendEmailVerification(context);
-        // restrict access to certain things using provider
-        // transition to another page instead of home screen
-      }
+      showSnackBar(context, "SignIn susccess", color: Colors.green);
+      // if (!user.emailVerified) {
+      //   await sendEmailVerification(context);
+      //   // restrict access to certain things using provider
+      //   // transition to another page instead of home screen
+      // }
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message); // Displaying the error message
+      showSnackBar(context, e.message,
+          color: Colors.red); // Displaying the error message
     }
   }
 
@@ -72,9 +74,9 @@ class FirebaseAuthMethods {
   Future<void> sendEmailVerification(BuildContext context) async {
     try {
       _auth.currentUser.sendEmailVerification();
-     // showSnackBar(context, 'Email verification sent!');
+      // showSnackBar(context, 'Email verification sent!');
     } on FirebaseAuthException catch (e) {
-     // showSnackBar(context, e.message!); // Display error message
+      // showSnackBar(context, e.message!); // Display error message
     }
   }
 
@@ -222,38 +224,41 @@ class FirebaseAuthMethods {
       // in user again and then delete account.
     }
   }
-  void showSnackBar(BuildContext context, String text) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(text),
-    ),
-  );
-}
-void showOTPDialog({
-   BuildContext context,
-   TextEditingController codeController,
-   VoidCallback onPressed,
-}) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) => AlertDialog(
-      title: const Text("Enter OTP"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          TextField(
-            controller: codeController,
-          ),
+
+  void showSnackBar(BuildContext context, String text, {Color color}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        backgroundColor: color,
+      ),
+    );
+  }
+
+  void showOTPDialog({
+    BuildContext context,
+    TextEditingController codeController,
+    VoidCallback onPressed,
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text("Enter OTP"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            TextField(
+              controller: codeController,
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("Done"),
+            onPressed: onPressed,
+          )
         ],
       ),
-      actions: <Widget>[
-        TextButton(
-          child: const Text("Done"),
-          onPressed: onPressed,
-        )
-      ],
-    ),
-  );
-}
+    );
+  }
 }

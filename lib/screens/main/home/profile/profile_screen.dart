@@ -25,9 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<String> addProfile() async {
     CollectionReference profile =
         FirebaseFirestore.instance.collection('profile');
-    var profiles = await profile.add({
-
-    });
+    var profiles = await profile.add({});
     return 'Created';
   }
 
@@ -106,7 +104,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 shape: BoxShape.rectangle,
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: NetworkImage(userProfile.picture)))),
+                                    image: AssetImage(
+                                        "assets/images/image1.png")))),
                         Positioned(
                           bottom: 0,
                           right: 0,
